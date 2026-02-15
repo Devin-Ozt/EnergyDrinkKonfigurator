@@ -1,4 +1,4 @@
--- Energy Drink Konfigurator - Datenbank Schema
+-- Energy Pulver Konfigurator - Datenbank Schema
 -- Für MariaDB/MySQL
 
 -- Benutzer-Tabelle
@@ -180,7 +180,7 @@ INSERT INTO additives (name, beschreibung, preis, kategorie, icon) VALUES
 ('Vitamin B-Komplex', 'Unterstützt den Energiestoffwechsel', 0.30, 'Vitamine', 'vitamin'),
 ('Vitamin C', 'Stärkt das Immunsystem', 0.30, 'Vitamine', 'vitamin'),
 ('Vitamin D', 'Das Sonnenvitamin', 0.30, 'Vitamine', 'vitamin'),
-('Taurin', 'Klassischer Energy-Drink Zusatz', 0.30, 'Aminosäuren', 'bolt'),
+('Taurin', 'Klassischer Energy-Zusatz', 0.30, 'Aminosäuren', 'bolt'),
 ('Guarana', 'Natürliche Koffein-Quelle', 0.30, 'Pflanzlich', 'leaf'),
 ('L-Theanin', 'Für fokussierte Entspannung', 0.30, 'Aminosäuren', 'brain'),
 ('Ginseng', 'Traditionelle Heilpflanze', 0.30, 'Pflanzlich', 'leaf'),

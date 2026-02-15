@@ -29,8 +29,9 @@ $caffeine = $configData['caffeine'];
 $flavors = $configData['flavors'] ?? [];
 $additives = $configData['additives'] ?? [];
 $sweetener = $configData['sweetener'];
+$size = $configData['size'] ?? 300;
 $canColor = $configData['canColor'] ?? '#00ff88';
-$canName = $configData['canName'] ?? 'Mein Drink';
+$canName = $configData['canName'] ?? 'Mein Mix';
 $prices = $configData['prices'];
 
 // Speichern-Nachricht
@@ -49,13 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
             
             // Konfiguration speichern
             $stmt = $pdo->prepare("INSERT INTO configurations 
-                (user_id, name, caffeine_level_id, sweetener_id, dosen_name, dosen_farbe, gesamtpreis) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)");
+                (user_id, name, caffeine_level_id, sweetener_id, groesse, dosen_name, dosen_farbe, gesamtpreis) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 $userId,
                 $configName,
                 $caffeine['id'],
                 $sweetener['id'],
+                $size,
                 $canName,
                 $canColor,
                 $prices['total']
@@ -88,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zusammenfassung - Energy Drink Konfigurator</title>
+    <title>Zusammenfassung - Energy Pulver Dose Konfigurator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -108,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                     </li>
                     <?php if (isLoggedIn()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="meine-drinks.php">Meine Drinks</a>
+                            <a class="nav-link" href="meine-drinks.php">Meine Mixes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">Logout</a>
@@ -133,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
             <?php if ($saveMessage): ?>
                 <div class="alert alert-success text-center mb-4">
                     <i class="bi bi-check-circle"></i> <?= escape($saveMessage) ?>
-                    <br><a href="meine-drinks.php">Zu meinen Drinks</a>
+                    <br><a href="meine-drinks.php">Zu meinen Mixes</a>
                 </div>
             <?php endif; ?>
             
@@ -148,6 +150,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                 <div class="col-lg-7">
                     <div class="summary-card">
                         <h3 class="mb-4"><?= escape($canName) ?></h3>
+                        
+                        <!-- Dosengröße -->
+                        <div class="summary-section">
+                            <h4><i class="bi bi-box-seam"></i> Dosengröße</h4>
+                            <div class="summary-items">
+                                <span class="summary-item">
+                                    <?= $size ?>g Dose (~<?= round($size / 15) ?> Portionen)
+                                </span>
+                            </div>
+                        </div>
                         
                         <!-- Koffein -->
                         <div class="summary-section">
@@ -201,10 +213,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                         <div class="summary-total">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <table class="table table-borderless text-start mb-0">
+                                    <table class="table table-borderless text-start mb-0 text-white">
                                         <tr>
-                                            <td>Basispreis:</td>
-                                            <td class="text-end"><?= formatPrice($prices['base']) ?></td>
+                                            <td>Dose (<?= $size ?>g):</td>
+                                            <td class="text-end"><?= formatPrice($prices['size'] ?? $prices['base'] ?? 14.95) ?></td>
                                         </tr>
                                         <?php if ($prices['caffeine'] > 0): ?>
                                         <tr>
@@ -234,7 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                                         <tr class="text-success">
                                             <td>Rabatt (<?= $prices['discount'] ?>%):</td>
                                             <td class="text-end">
-                                                -<?= formatPrice(($prices['base'] + $prices['caffeine'] + $prices['flavors'] + $prices['additives'] + $prices['sweetener']) * $prices['discount'] / 100) ?>
+                                                -<?= formatPrice((($prices['size'] ?? $prices['base'] ?? 14.95) + $prices['caffeine'] + $prices['flavors'] + $prices['additives'] + $prices['sweetener']) * $prices['discount'] / 100) ?>
                                             </td>
                                         </tr>
                                         <?php endif; ?>
@@ -242,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                                 </div>
                                 <div class="col-md-6 d-flex align-items-center justify-content-center">
                                     <div>
-                                        <small class="text-muted d-block">Gesamtpreis</small>
+                                        <small class="d-block" style="color: #b8b8cc;">Gesamtpreis</small>
                                         <span class="summary-price"><?= formatPrice($prices['total']) ?></span>
                                     </div>
                                 </div>
@@ -276,31 +288,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                 <div class="col-lg-5">
                     <div class="summary-can-preview">
                         <div class="can-preview-card">
-                            <h5>Deine Dose</h5>
-                            <svg viewBox="0 0 120 200" style="width: 180px; height: 300px; filter: drop-shadow(0 0 30px <?= escape($canColor) ?>80);">
+                            <h5>Deine Dose (<?= $size ?>g)</h5>
+                            <svg viewBox="0 0 140 200" style="width: 200px; height: 280px; filter: drop-shadow(0 0 30px <?= escape($canColor) ?>80);">
                                 <defs>
-                                    <linearGradient id="summaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <linearGradient id="summaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:<?= escape($canColor) ?>;stop-opacity:1" />
                                         <stop offset="50%" style="stop-color:<?= escape(adjustColor($canColor, 30)) ?>;stop-opacity:1" />
                                         <stop offset="100%" style="stop-color:<?= escape($canColor) ?>;stop-opacity:1" />
                                     </linearGradient>
+                                    <linearGradient id="summaryLidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+                                    </linearGradient>
                                 </defs>
-                                <!-- Dose Körper -->
-                                <rect x="15" y="25" width="90" height="160" rx="5" fill="url(#summaryGradient)" />
-                                <!-- Dose Oberteil -->
-                                <ellipse cx="60" cy="25" rx="45" ry="10" fill="#c0c0c0" />
-                                <ellipse cx="60" cy="25" rx="40" ry="8" fill="#e0e0e0" />
-                                <!-- Pull Tab -->
-                                <ellipse cx="60" cy="25" rx="15" ry="5" fill="#a0a0a0" />
-                                <rect x="55" y="15" width="10" height="15" rx="2" fill="#808080" />
-                                <!-- Dose Unterteil -->
-                                <ellipse cx="60" cy="185" rx="45" ry="10" fill="<?= escape(adjustColor($canColor, -40)) ?>" />
+                                <!-- Deckel oben -->
+                                <ellipse cx="70" cy="22" rx="48" ry="12" fill="url(#summaryLidGrad)" />
+                                <rect x="22" y="15" width="96" height="12" fill="#c0c0c0" />
+                                <ellipse cx="70" cy="15" rx="48" ry="12" fill="#d0d0d0" />
+                                <!-- Griff auf Deckel -->
+                                <rect x="55" y="8" width="30" height="5" rx="2" fill="#b0b0b0" />
+                                <!-- Dosen-Körper (Zylinder) -->
+                                <rect x="22" y="22" width="96" height="145" fill="url(#summaryGradient)" />
+                                <!-- Boden-Ellipse -->
+                                <ellipse cx="70" cy="167" rx="48" ry="12" fill="url(#summaryGradient)" opacity="0.8" />
                                 <!-- Label -->
-                                <rect x="20" y="60" width="80" height="100" fill="rgba(0,0,0,0.3)" rx="3" />
-                                <text x="60" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ENERGY</text>
-                                <text x="60" y="108" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">MIX</text>
-                                <text x="60" y="130" text-anchor="middle" fill="#fff" font-size="7"><?= escape(strtoupper($canName)) ?></text>
-                                <text x="60" y="150" text-anchor="middle" fill="#fff" font-size="6"><?= $caffeine['mg'] ?>mg KOFFEIN</text>
+                                <rect x="28" y="50" width="84" height="100" fill="rgba(0,0,0,0.3)" rx="5" />
+                                <text x="70" y="78" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ENERGY</text>
+                                <text x="70" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">MIX</text>
+                                <text x="70" y="116" text-anchor="middle" fill="#fff" font-size="7"><?= escape(strtoupper($canName)) ?></text>
+                                <text x="70" y="130" text-anchor="middle" fill="#fff" font-size="6"><?= $caffeine['mg'] ?>mg KOFFEIN</text>
+                                <text x="70" y="143" text-anchor="middle" fill="#fff" font-size="6"><?= $size ?>g</text>
+                                <!-- Glanz-Effekt -->
+                                <rect x="22" y="22" width="15" height="145" fill="rgba(255,255,255,0.08)" />
                             </svg>
                             
                             <div class="mt-4">
@@ -364,7 +383,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_config'])) {
                             In einer echten Anwendung würde jetzt der Checkout-Prozess starten.
                         </p>
                         <div class="summary-total mt-4 p-3" style="background: rgba(0,255,136,0.1); border-radius: 10px;">
-                            <small class="text-muted">Bestellwert</small>
+                            <small style="color: #b8b8cc;">Bestellwert</small>
                             <div class="summary-price"><?= formatPrice($prices['total']) ?></div>
                         </div>
                     </div>

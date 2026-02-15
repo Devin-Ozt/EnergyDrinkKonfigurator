@@ -1,6 +1,6 @@
 <?php
 /**
- * Meine gespeicherten Drinks
+ * Meine gespeicherten Mixes
  */
 require_once 'config/database.php';
 startSession();
@@ -75,7 +75,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Drinks - Energy Drink Konfigurator</title>
+    <title>Meine Mixes - Energy Pulver Konfigurator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -97,7 +97,7 @@ try {
                         <a class="nav-link" href="konfigurator.php">Konfigurator</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="meine-drinks.php">Meine Drinks</a>
+                        <a class="nav-link active" href="meine-drinks.php">Meine Mixes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">
@@ -112,17 +112,17 @@ try {
     <div class="drinks-container">
         <div class="container py-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1><i class="bi bi-collection"></i> Meine Drinks</h1>
+                <h1><i class="bi bi-collection"></i> Meine Mixes</h1>
                 <a href="konfigurator.php" class="btn btn-neon">
-                    <i class="bi bi-plus-lg"></i> Neuer Drink
+                    <i class="bi bi-plus-lg"></i> Neuer Mix
                 </a>
             </div>
             
             <?php if (empty($configurations)): ?>
                 <div class="text-center py-5">
                     <i class="bi bi-cup-straw text-muted" style="font-size: 5rem;"></i>
-                    <h3 class="mt-4">Noch keine Drinks gespeichert</h3>
-                    <p class="text-muted">Erstelle deinen ersten individuellen Energy Drink!</p>
+                    <h3 class="mt-4">Noch keine Mixes gespeichert</h3>
+                    <p class="text-muted">Erstelle dein erstes individuelles Energy Pulver!</p>
                     <a href="konfigurator.php" class="btn btn-neon btn-lg mt-3">
                         <i class="bi bi-lightning-charge"></i> Jetzt konfigurieren
                     </a>
@@ -133,7 +133,7 @@ try {
                     <div class="col-md-6 col-lg-4">
                         <div class="drink-card">
                             <div class="drink-header">
-                                <div class="drink-mini-can" style="background: <?= escape($config['dosen_farbe']) ?>; border-radius: 5px;"></div>
+                                <div class="drink-mini-can" style="background: <?= escape($config['dosen_farbe']) ?>; border-radius: 8px 8px 4px 4px;"></div>
                                 <div>
                                     <h5 class="mb-0"><?= escape($config['name']) ?></h5>
                                     <small class="text-muted">
@@ -143,6 +143,9 @@ try {
                             </div>
                             <div class="drink-body">
                                 <div class="mb-2">
+                                    <span class="badge bg-info text-dark">
+                                        <i class="bi bi-box-seam"></i> <?= $config['groesse'] ?? 300 ?>g
+                                    </span>
                                     <span class="badge bg-warning text-dark">
                                         <i class="bi bi-lightning"></i> <?= $config['menge_mg'] ?>mg
                                     </span>

@@ -1,14 +1,21 @@
 /**
- * Energy Drink Konfigurator - JavaScript
+ * Energy Pulver Dose Konfigurator - JavaScript
  */
+
+// Größen-Preisliste
+const sizePrices = {
+    300: 14.95,
+    400: 18.95,
+    500: 22.95
+};
 
 // Konfigurationsstatus
 const config = {
     currentStep: 1,
-    totalSteps: 5,
-    basePrice: 3.95,
+    totalSteps: 6,
     
     // Ausgewählte Optionen
+    size: null,
     caffeine: null,
     flavors: [],
     additives: [],
@@ -17,6 +24,7 @@ const config = {
     canName: '',
     
     // Preise
+    sizePrice: 0,
     caffeinePrice: 0,
     flavorsPrice: 0,
     additivesPrice: 0,
@@ -36,6 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initialisiert den Konfigurator
  */
 function initializeKonfigurator() {
+    // Event Listener für Size Cards
+    document.querySelectorAll('.option-card[data-type="size"]').forEach(card => {
+        card.addEventListener('click', function() {
+            handleSizeSelection(this);
+        });
+    });
+    
     // Event Listener für Option Cards (Koffein, Süßung)
     document.querySelectorAll('.option-card[data-type="caffeine"], .option-card[data-type="sweetener"]').forEach(card => {
         card.addEventListener('click', function() {
@@ -119,6 +134,42 @@ function initializeKonfigurator() {
     }
     
     // Initial Update
+    updatePriceDisplay();
+}
+
+/**
+ * Behandelt Größen-Auswahl
+ */
+function handleSizeSelection(card) {
+    const size = parseInt(card.dataset.size);
+    const price = parseFloat(card.dataset.price);
+    
+    // Alle anderen Karten deselektieren
+    document.querySelectorAll('.option-card[data-type="size"]').forEach(c => {
+        c.classList.remove('selected');
+    });
+    
+    // Diese Karte selektieren
+    card.classList.add('selected');
+    card.classList.add('pop');
+    setTimeout(() => card.classList.remove('pop'), 300);
+    
+    config.size = size;
+    config.sizePrice = price;
+    
+    // Size Text im Preis-Display aktualisieren
+    const sizeRow = document.getElementById('price-size');
+    if (sizeRow) {
+        sizeRow.querySelector('span:first-child').textContent = `Dose (${size}g)`;
+        sizeRow.querySelector('span:last-child').textContent = formatPrice(price);
+    }
+    
+    // Size im Vorschau-SVG aktualisieren
+    const sizeText = document.getElementById('can-size-text');
+    if (sizeText) {
+        sizeText.textContent = size + 'g';
+    }
+    
     updatePriceDisplay();
 }
 
@@ -292,7 +343,7 @@ function updatePriceDisplay() {
     }
     
     // Gesamtpreis berechnen
-    let total = config.basePrice + config.caffeinePrice + config.flavorsPrice + 
+    let total = config.sizePrice + config.caffeinePrice + config.flavorsPrice + 
                 config.additivesPrice + config.sweetenerPrice;
     
     // Rabatt anwenden
@@ -362,15 +413,19 @@ function updateFlavorsPreview() {
 function nextStep() {
     if (config.currentStep < config.totalSteps) {
         // Validierung
-        if (config.currentStep === 1 && !config.caffeine) {
+        if (config.currentStep === 1 && !config.size) {
+            alert('Bitte wähle eine Dosengröße aus.');
+            return;
+        }
+        if (config.currentStep === 2 && !config.caffeine) {
             alert('Bitte wähle ein Koffein-Level aus.');
             return;
         }
-        if (config.currentStep === 2 && config.flavors.length === 0) {
+        if (config.currentStep === 3 && config.flavors.length === 0) {
             alert('Bitte wähle mindestens einen Geschmack aus.');
             return;
         }
-        if (config.currentStep === 4 && !config.sweetener) {
+        if (config.currentStep === 5 && !config.sweetener) {
             alert('Bitte wähle ein Süßungsmittel aus.');
             return;
         }
@@ -414,24 +469,29 @@ function goToStep(step) {
  */
 function goToSummary() {
     // Validierung
+    if (!config.size) {
+        alert('Bitte wähle eine Dosengröße aus.');
+        goToStep(1);
+        return;
+    }
     if (!config.caffeine) {
         alert('Bitte wähle ein Koffein-Level aus.');
-        goToStep(1);
+        goToStep(2);
         return;
     }
     if (config.flavors.length === 0) {
         alert('Bitte wähle mindestens einen Geschmack aus.');
-        goToStep(2);
+        goToStep(3);
         return;
     }
     if (!config.sweetener) {
         alert('Bitte wähle ein Süßungsmittel aus.');
-        goToStep(4);
+        goToStep(5);
         return;
     }
     
     // Gesamtpreis berechnen
-    let total = config.basePrice + config.caffeinePrice + config.flavorsPrice + 
+    let total = config.sizePrice + config.caffeinePrice + config.flavorsPrice + 
                 config.additivesPrice + config.sweetenerPrice;
     
     if (config.couponDiscount > 0) {
@@ -440,14 +500,15 @@ function goToSummary() {
     
     // Konfiguration für die Zusammenfassung
     const summaryData = {
+        size: config.size,
         caffeine: config.caffeine,
         flavors: config.flavors,
         additives: config.additives,
         sweetener: config.sweetener,
         canColor: config.canColor,
-        canName: config.canName || 'Mein Drink',
+        canName: config.canName || 'Mein Mix',
         prices: {
-            base: config.basePrice,
+            size: config.sizePrice,
             caffeine: config.caffeinePrice,
             flavors: config.flavorsPrice,
             additives: config.additivesPrice,

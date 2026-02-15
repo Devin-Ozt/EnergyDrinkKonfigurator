@@ -21,14 +21,15 @@ if (!$input) {
 }
 
 $userId = getUserId();
-$configName = trim($input['name'] ?? 'Mein Drink');
+$configName = trim($input['name'] ?? 'Mein Mix');
 $caffeine = $input['caffeine'] ?? null;
 $sweetener = $input['sweetener'] ?? null;
 $flavors = $input['flavors'] ?? [];
 $additives = $input['additives'] ?? [];
+$size = $input['size'] ?? 300;
 $canColor = $input['canColor'] ?? '#00ff88';
-$canName = $input['canName'] ?? 'Mein Drink';
-$totalPrice = $input['totalPrice'] ?? 3.95;
+$canName = $input['canName'] ?? 'Mein Mix';
+$totalPrice = $input['totalPrice'] ?? 14.95;
 
 // Validierung
 if (!$caffeine || !$sweetener) {
@@ -42,13 +43,14 @@ try {
     
     // Konfiguration speichern
     $stmt = $pdo->prepare("INSERT INTO configurations 
-        (user_id, name, caffeine_level_id, sweetener_id, dosen_name, dosen_farbe, gesamtpreis) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)");
+        (user_id, name, caffeine_level_id, sweetener_id, groesse, dosen_name, dosen_farbe, gesamtpreis) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $userId,
         $configName,
         $caffeine['id'],
         $sweetener['id'],
+        $size,
         $canName,
         $canColor,
         $totalPrice

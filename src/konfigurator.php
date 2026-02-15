@@ -1,6 +1,6 @@
 <?php
 /**
- * Hauptkonfigurator - 5-Schritte Energy Drink Konfiguration
+ * Hauptkonfigurator - 5-Schritte Energy Pulver Konfiguration
  */
 require_once 'config/database.php';
 startSession();
@@ -62,7 +62,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfigurator - Energy Drink Konfigurator</title>
+    <title>Konfigurator - Energy Pulver Dose Konfigurator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -85,7 +85,7 @@ try {
                     </li>
                     <?php if (isLoggedIn()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="meine-drinks.php">Meine Drinks</a>
+                            <a class="nav-link" href="meine-drinks.php">Meine Mixes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">
@@ -116,22 +116,26 @@ try {
             <div class="progress-steps">
                 <div class="step active" data-step="1">
                     <span class="step-number">1</span>
-                    <span class="step-title">Koffein</span>
+                    <span class="step-title">Größe</span>
                 </div>
                 <div class="step" data-step="2">
                     <span class="step-number">2</span>
-                    <span class="step-title">Geschmack</span>
+                    <span class="step-title">Koffein</span>
                 </div>
                 <div class="step" data-step="3">
                     <span class="step-number">3</span>
-                    <span class="step-title">Zusätze</span>
+                    <span class="step-title">Geschmack</span>
                 </div>
                 <div class="step" data-step="4">
                     <span class="step-number">4</span>
-                    <span class="step-title">Süßung</span>
+                    <span class="step-title">Zusätze</span>
                 </div>
                 <div class="step" data-step="5">
                     <span class="step-number">5</span>
+                    <span class="step-title">Süßung</span>
+                </div>
+                <div class="step" data-step="6">
+                    <span class="step-number">6</span>
                     <span class="step-title">Design</span>
                 </div>
             </div>
@@ -140,8 +144,44 @@ try {
                 <!-- Linke Seite: Optionen -->
                 <div class="konfigurator-options">
                     
-                    <!-- Schritt 1: Koffein-Level -->
+                    <!-- Schritt 1: Dosengröße -->
                     <div class="step-content active" id="step-1">
+                        <h3><i class="bi bi-box-seam text-neon"></i> Wähle deine Dosengröße</h3>
+                        <p class="text-muted">Wie viel Power brauchst du?</p>
+                        
+                        <div class="options-grid size-grid">
+                            <div class="option-card size-card" data-type="size" data-size="300" data-price="14.95">
+                                <div class="option-icon" style="font-size: 2.5rem;">🥫</div>
+                                <div class="option-name">300g Dose</div>
+                                <div class="option-desc">~20 Portionen</div>
+                                <div class="option-price">14,95 €</div>
+                            </div>
+                            <div class="option-card size-card" data-type="size" data-size="400" data-price="18.95">
+                                <div class="option-icon" style="font-size: 2.5rem;">🥫</div>
+                                <div class="option-name">400g Dose</div>
+                                <div class="option-desc">~27 Portionen</div>
+                                <div class="option-price">18,95 €</div>
+                                <span class="badge bg-success position-absolute" style="top: 8px; right: 8px; font-size: 0.65rem;">BELIEBT</span>
+                            </div>
+                            <div class="option-card size-card" data-type="size" data-size="500" data-price="22.95">
+                                <div class="option-icon" style="font-size: 2.5rem;">🥫</div>
+                                <div class="option-name">500g Dose</div>
+                                <div class="option-desc">~33 Portionen</div>
+                                <div class="option-price">22,95 €</div>
+                                <span class="badge bg-warning text-dark position-absolute" style="top: 8px; right: 8px; font-size: 0.65rem;">BEST VALUE</span>
+                            </div>
+                        </div>
+                        
+                        <div class="konfigurator-nav">
+                            <div></div>
+                            <button class="btn btn-neon" onclick="nextStep()">
+                                Weiter <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Schritt 2: Koffein-Level -->
+                    <div class="step-content" id="step-2">
                         <h3><i class="bi bi-lightning-charge text-warning"></i> Wähle dein Koffein-Level</h3>
                         <p class="text-muted">Wie viel Power brauchst du?</p>
                         
@@ -176,8 +216,8 @@ try {
                         </div>
                     </div>
 
-                    <!-- Schritt 2: Geschmacksrichtungen -->
-                    <div class="step-content" id="step-2">
+                    <!-- Schritt 3: Geschmacksrichtungen -->
+                    <div class="step-content" id="step-3">
                         <h3><i class="bi bi-palette text-info"></i> Wähle deine Geschmacksrichtungen</h3>
                         <p class="text-muted">Kombiniere bis zu 3 Flavors für deinen perfekten Mix!</p>
                         
@@ -232,8 +272,8 @@ try {
                         </div>
                     </div>
 
-                    <!-- Schritt 3: Funktionale Zusätze -->
-                    <div class="step-content" id="step-3">
+                    <!-- Schritt 4: Funktionale Zusätze -->
+                    <div class="step-content" id="step-4">
                         <h3><i class="bi bi-capsule text-success"></i> Funktionale Zusätze</h3>
                         <p class="text-muted">Boost deine Performance mit speziellen Zutaten</p>
                         
@@ -276,10 +316,10 @@ try {
                         </div>
                     </div>
 
-                    <!-- Schritt 4: Süßungsmittel -->
-                    <div class="step-content" id="step-4">
+                    <!-- Schritt 5: Süßungsmittel -->
+                    <div class="step-content" id="step-5">
                         <h3><i class="bi bi-droplet text-primary"></i> Süßungsmittel</h3>
-                        <p class="text-muted">Wie süß soll dein Drink sein?</p>
+                        <p class="text-muted">Wie süß soll dein Pulver sein?</p>
                         
                         <div class="options-grid">
                             <?php foreach ($sweeteners as $sweetener): ?>
@@ -297,7 +337,7 @@ try {
                                 </div>
                                 <div class="option-name"><?= escape($sweetener['name']) ?></div>
                                 <div class="option-desc">
-                                    <?= $sweetener['kalorien_pro_100ml'] ?> kcal/100ml
+                                    <?= $sweetener['kalorien_pro_100ml'] ?> kcal/Portion
                                 </div>
                                 <div class="option-price">
                                     <?= $sweetener['preis'] > 0 ? '+' . formatPrice($sweetener['preis']) : 'Inklusive' ?>
@@ -316,13 +356,13 @@ try {
                         </div>
                     </div>
 
-                    <!-- Schritt 5: Personalisierung -->
-                    <div class="step-content" id="step-5">
+                    <!-- Schritt 6: Personalisierung -->
+                    <div class="step-content" id="step-6">
                         <h3><i class="bi bi-brush text-warning"></i> Personalisierung</h3>
-                        <p class="text-muted">Mach deinen Drink einzigartig!</p>
+                        <p class="text-muted">Mach dein Pulver einzigartig!</p>
                         
                         <div class="personalization-section">
-                            <h5>Dosenfarbe wählen</h5>
+                            <h5>Verpackungsfarbe wählen</h5>
                             <div class="color-picker-container">
                                 <input type="color" id="can-color" value="#00ff88">
                                 <div class="color-presets">
@@ -339,7 +379,7 @@ try {
                         </div>
                         
                         <div class="name-input">
-                            <h5>Name auf der Dose</h5>
+                            <h5>Name auf der Verpackung</h5>
                             <input type="text" id="can-name" placeholder="Dein Name oder Gamertag" maxlength="15">
                             <small class="text-muted">Max. 15 Zeichen</small>
                         </div>
@@ -361,30 +401,37 @@ try {
                         <h5 class="mb-3">Deine Kreation</h5>
                         
                         <div class="can-preview">
-                            <svg viewBox="0 0 120 200" class="can-preview-svg" id="can-svg">
+                            <svg viewBox="0 0 140 200" class="can-preview-svg" id="can-svg">
                                 <defs>
-                                    <linearGradient id="canPreviewGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <linearGradient id="canPreviewGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" id="gradient-stop-1" style="stop-color:#00ff88;stop-opacity:1" />
                                         <stop offset="50%" id="gradient-stop-2" style="stop-color:#00ccff;stop-opacity:1" />
                                         <stop offset="100%" id="gradient-stop-3" style="stop-color:#00ff88;stop-opacity:1" />
                                     </linearGradient>
+                                    <linearGradient id="lidGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+                                    </linearGradient>
                                 </defs>
-                                <!-- Dose Körper -->
-                                <rect x="15" y="25" width="90" height="160" rx="5" fill="url(#canPreviewGradient)" id="can-body" />
-                                <!-- Dose Oberteil -->
-                                <ellipse cx="60" cy="25" rx="45" ry="10" fill="#c0c0c0" />
-                                <ellipse cx="60" cy="25" rx="40" ry="8" fill="#e0e0e0" />
-                                <!-- Pull Tab -->
-                                <ellipse cx="60" cy="25" rx="15" ry="5" fill="#a0a0a0" />
-                                <rect x="55" y="15" width="10" height="15" rx="2" fill="#808080" />
-                                <!-- Dose Unterteil -->
-                                <ellipse cx="60" cy="185" rx="45" ry="10" id="can-bottom" fill="#00cc70" />
+                                <!-- Deckel oben -->
+                                <ellipse cx="70" cy="22" rx="48" ry="12" fill="url(#lidGradient)" />
+                                <rect x="22" y="15" width="96" height="12" fill="#c0c0c0" />
+                                <ellipse cx="70" cy="15" rx="48" ry="12" fill="#d0d0d0" />
+                                <!-- Griff auf Deckel -->
+                                <rect x="55" y="8" width="30" height="5" rx="2" fill="#b0b0b0" />
+                                <!-- Dosen-Körper (Zylinder) -->
+                                <rect x="22" y="22" width="96" height="145" fill="url(#canPreviewGradient)" id="can-body" />
+                                <!-- Boden-Ellipse -->
+                                <ellipse cx="70" cy="167" rx="48" ry="12" fill="url(#canPreviewGradient)" id="can-bottom" opacity="0.8" />
                                 <!-- Label -->
-                                <rect x="20" y="60" width="80" height="100" fill="rgba(0,0,0,0.3)" rx="3" />
-                                <text x="60" y="90" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ENERGY</text>
-                                <text x="60" y="108" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">MIX</text>
-                                <text x="60" y="130" text-anchor="middle" fill="#fff" font-size="7" id="can-name-text">DEIN NAME</text>
-                                <text x="60" y="150" text-anchor="middle" fill="#fff" font-size="6" id="can-caffeine-text">100mg</text>
+                                <rect x="28" y="50" width="84" height="100" fill="rgba(0,0,0,0.3)" rx="5" />
+                                <text x="70" y="78" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">ENERGY</text>
+                                <text x="70" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">MIX</text>
+                                <text x="70" y="116" text-anchor="middle" fill="#fff" font-size="7" id="can-name-text">DEIN NAME</text>
+                                <text x="70" y="130" text-anchor="middle" fill="#fff" font-size="6" id="can-caffeine-text">100mg</text>
+                                <text x="70" y="143" text-anchor="middle" fill="#fff" font-size="6" id="can-size-text">300g</text>
+                                <!-- Glanz-Effekt -->
+                                <rect x="22" y="22" width="15" height="145" fill="rgba(255,255,255,0.08)" />
                             </svg>
                         </div>
                         
@@ -395,9 +442,9 @@ try {
                         
                         <!-- Preis-Anzeige -->
                         <div class="price-display">
-                            <div class="price-row">
-                                <span>Basispreis</span>
-                                <span>3,95 €</span>
+                            <div class="price-row" id="price-size">
+                                <span>Dose (300g)</span>
+                                <span>14,95 €</span>
                             </div>
                             <div class="price-row" id="price-caffeine" style="display: none;">
                                 <span>Koffein</span>

@@ -62,8 +62,14 @@ try {
     $flavorsPrice = array_sum(array_column($flavors, 'price'));
     $additivesPrice = array_sum(array_column($additives, 'price'));
     
+    // Size-Preisliste
+    $sizePrices = [300 => 14.95, 400 => 18.95, 500 => 22.95];
+    $size = (int)($config['groesse'] ?? 300);
+    $sizePrice = $sizePrices[$size] ?? 14.95;
+    
     // Config-Daten für die Zusammenfassungsseite vorbereiten
     $configData = [
+        'size' => $size,
         'caffeine' => [
             'id' => $config['caffeine_level_id'],
             'name' => $config['caffeine_name'],
@@ -80,7 +86,7 @@ try {
         'canColor' => $config['dosen_farbe'],
         'canName' => $config['dosen_name'],
         'prices' => [
-            'base' => 3.95,
+            'size' => $sizePrice,
             'caffeine' => (float)$config['caffeine_price'],
             'flavors' => $flavorsPrice,
             'additives' => $additivesPrice,

@@ -1,6 +1,6 @@
 <?php
 /**
- * Landing Page - Energy Drink Konfigurator
+ * Landing Page - Energy Pulver Konfigurator
  */
 require_once 'config/database.php';
 startSession();
@@ -10,7 +10,7 @@ startSession();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Energy Drink Konfigurator - Erstelle deinen eigenen Energy Drink</title>
+    <title>Energy Pulver Konfigurator - Erstelle dein eigenes Energy Pulver in der Dose</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -33,7 +33,7 @@ startSession();
                     </li>
                     <?php if (isLoggedIn()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="meine-drinks.php">Meine Drinks</a>
+                            <a class="nav-link" href="meine-drinks.php">Meine Mixes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="logout.php">
@@ -60,12 +60,13 @@ startSession();
             <div class="row align-items-center min-vh-100">
                 <div class="col-lg-6">
                     <h1 class="display-3 fw-bold mb-4">
-                        Dein <span class="text-neon">Energy Drink</span><br>
+                        Dein <span class="text-neon">Energy Pulver</span><br>
                         Deine Regeln.
                     </h1>
                     <p class="lead mb-4">
-                        Kreiere deinen individuellen Energy Drink mit über 20 Geschmacksrichtungen, 
+                        Kreiere dein individuelles Energy Pulver in der Dose mit über 20 Geschmacksrichtungen, 
                         verschiedenen Koffein-Leveln und funktionalen Zusätzen. 
+                        Wähle zwischen 300g, 400g und 500g Dosen.
                         Perfekt für Gamer, Streamer und alle, die mehr wollen.
                     </p>
                     <div class="d-flex gap-3 flex-wrap">
@@ -81,30 +82,37 @@ startSession();
                     <div class="hero-can-container">
                         <div class="hero-can">
                             <div class="can-glow"></div>
-                            <svg viewBox="0 0 120 200" class="can-svg">
-                                <!-- Dose SVG -->
+                            <svg viewBox="0 0 140 200" class="can-svg">
+                                <!-- Pulverdose SVG -->
                                 <defs>
-                                    <linearGradient id="canGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <linearGradient id="tinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
                                         <stop offset="50%" style="stop-color:#00ccff;stop-opacity:1" />
                                         <stop offset="100%" style="stop-color:#00ff88;stop-opacity:1" />
                                     </linearGradient>
+                                    <linearGradient id="tinLidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+                                    </linearGradient>
                                 </defs>
-                                <!-- Dose Körper -->
-                                <rect x="15" y="25" width="90" height="160" rx="5" fill="url(#canGradient)" />
-                                <!-- Dose Oberteil -->
-                                <ellipse cx="60" cy="25" rx="45" ry="10" fill="#c0c0c0" />
-                                <ellipse cx="60" cy="25" rx="40" ry="8" fill="#e0e0e0" />
-                                <!-- Pull Tab -->
-                                <ellipse cx="60" cy="25" rx="15" ry="5" fill="#a0a0a0" />
-                                <rect x="55" y="15" width="10" height="15" rx="2" fill="#808080" />
-                                <!-- Dose Unterteil -->
-                                <ellipse cx="60" cy="185" rx="45" ry="10" fill="#00cc70" />
+                                <!-- Deckel oben -->
+                                <ellipse cx="70" cy="22" rx="48" ry="12" fill="url(#tinLidGrad)" />
+                                <rect x="22" y="15" width="96" height="12" fill="#c0c0c0" />
+                                <ellipse cx="70" cy="15" rx="48" ry="12" fill="#d0d0d0" />
+                                <!-- Griff auf Deckel -->
+                                <rect x="55" y="8" width="30" height="5" rx="2" fill="#b0b0b0" />
+                                <!-- Dosen-Körper (Zylinder) -->
+                                <rect x="22" y="22" width="96" height="145" fill="url(#tinGradient)" />
+                                <!-- Boden-Ellipse -->
+                                <ellipse cx="70" cy="167" rx="48" ry="12" fill="url(#tinGradient)" opacity="0.8" />
                                 <!-- Label -->
-                                <rect x="20" y="60" width="80" height="100" fill="rgba(0,0,0,0.3)" rx="3" />
-                                <text x="60" y="100" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">ENERGY</text>
-                                <text x="60" y="120" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">MIX</text>
-                                <text x="60" y="145" text-anchor="middle" fill="#fff" font-size="8">DEIN DRINK</text>
+                                <rect x="28" y="50" width="84" height="100" fill="rgba(0,0,0,0.3)" rx="5" />
+                                <text x="70" y="78" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">ENERGY</text>
+                                <text x="70" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">MIX</text>
+                                <text x="70" y="118" text-anchor="middle" fill="#fff" font-size="7">DEIN PULVER</text>
+                                <text x="70" y="134" text-anchor="middle" fill="#fff" font-size="6">300g | 400g | 500g</text>
+                                <!-- Glanz-Effekt -->
+                                <rect x="22" y="22" width="15" height="145" fill="rgba(255,255,255,0.08)" />
                             </svg>
                         </div>
                     </div>
@@ -142,7 +150,7 @@ startSession();
                             <i class="bi bi-stars text-success"></i>
                         </div>
                         <h4>3. Personalisieren</h4>
-                        <p class="text-muted">Dein Name auf der Dose, deine Farbe, dein Style.</p>
+                        <p class="text-muted">Dein Name auf der Verpackung, deine Farbe, dein Style.</p>
                     </div>
                 </div>
             </div>
@@ -211,33 +219,51 @@ startSession();
     <section class="py-5 bg-dark">
         <div class="container">
             <h2 class="text-center mb-5 text-white">Transparente Preise</h2>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="pricing-card">
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <h3 class="text-neon mb-4">Basispreis: 3,95 €</h3>
-                                <ul class="list-unstyled pricing-list">
-                                    <li><i class="bi bi-check-circle text-success"></i> 330ml Dose</li>
-                                    <li><i class="bi bi-check-circle text-success"></i> Basis-Koffein-Level</li>
-                                    <li><i class="bi bi-check-circle text-success"></i> Standard-Geschmack</li>
-                                    <li><i class="bi bi-check-circle text-success"></i> Personalisierung inklusive</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="mb-3">Premium-Optionen</h4>
-                                <ul class="list-unstyled pricing-list">
-                                    <li><i class="bi bi-plus-circle text-warning"></i> Premium-Flavors: +0,30 €</li>
-                                    <li><i class="bi bi-plus-circle text-warning"></i> Funktionale Zusätze: +0,30 €</li>
-                                    <li><i class="bi bi-plus-circle text-warning"></i> Extra Koffein: +0,30-0,50 €</li>
-                                </ul>
-                                <a href="konfigurator.php" class="btn btn-neon mt-3">
-                                    Jetzt starten <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card text-center p-4">
+                        <h4 class="mb-2">300g Dose</h4>
+                        <p class="text-muted small">~20 Portionen</p>
+                        <h3 class="text-neon mb-3">14,95 €</h3>
+                        <ul class="list-unstyled pricing-list text-start">
+                            <li><i class="bi bi-check-circle text-success"></i> Basis-Koffein-Level</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Standard-Geschmack</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Personalisierung inklusive</li>
+                        </ul>
+                        <a href="konfigurator.php" class="btn btn-outline-neon mt-3 w-100">Jetzt starten</a>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card text-center p-4" style="border: 2px solid var(--neon-green); position: relative;">
+                        <span class="badge bg-success position-absolute" style="top: -10px; left: 50%; transform: translateX(-50%);">BELIEBT</span>
+                        <h4 class="mb-2">400g Dose</h4>
+                        <p class="text-muted small">~27 Portionen</p>
+                        <h3 class="text-neon mb-3">18,95 €</h3>
+                        <ul class="list-unstyled pricing-list text-start">
+                            <li><i class="bi bi-check-circle text-success"></i> Basis-Koffein-Level</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Standard-Geschmack</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Personalisierung inklusive</li>
+                        </ul>
+                        <a href="konfigurator.php" class="btn btn-neon mt-3 w-100">Jetzt starten <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card text-center p-4">
+                        <span class="badge bg-warning text-dark position-absolute" style="top: -10px; left: 50%; transform: translateX(-50%);">BEST VALUE</span>
+                        <h4 class="mb-2">500g Dose</h4>
+                        <p class="text-muted small">~33 Portionen</p>
+                        <h3 class="text-neon mb-3">22,95 €</h3>
+                        <ul class="list-unstyled pricing-list text-start">
+                            <li><i class="bi bi-check-circle text-success"></i> Basis-Koffein-Level</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Standard-Geschmack</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Personalisierung inklusive</li>
+                        </ul>
+                        <a href="konfigurator.php" class="btn btn-outline-neon mt-3 w-100">Jetzt starten</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="text-muted">Premium-Flavors, Funktionale Zusätze und Extra Koffein kosten +0,20 – 0,50 € Aufpreis</p>
             </div>
         </div>
     </section>
@@ -249,7 +275,7 @@ startSession();
                 <div class="col-md-6">
                     <p class="mb-0 text-muted">
                         <i class="bi bi-lightning-charge-fill text-warning"></i> 
-                        ENERGYMIX Konfigurator &copy; 2026
+                        ENERGYMIX Pulver-Konfigurator &copy; 2026
                     </p>
                 </div>
                 <div class="col-md-6 text-md-end">

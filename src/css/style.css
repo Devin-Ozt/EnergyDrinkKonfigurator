@@ -1,0 +1,969 @@
+/* ================================================
+   Energy Drink Konfigurator - Main Stylesheet
+   ================================================ */
+
+/* CSS Variables */
+:root {
+    --neon-green: #00ff88;
+    --neon-blue: #00ccff;
+    --neon-pink: #ff00ff;
+    --dark-bg: #0d0d0d;
+    --darker-bg: #1a1a2e;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--neon-green);
+    border-radius: 4px;
+}
+
+/* Typography */
+.text-neon {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+}
+
+.brand-text {
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* Buttons */
+.btn-neon {
+    background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));
+    border: none;
+    color: #000;
+    font-weight: 600;
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+    color: #000;
+}
+
+.btn-outline-neon {
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-neon:hover {
+    background: var(--neon-green);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Navigation */
+.navbar {
+    backdrop-filter: blur(10px);
+    background: rgba(13, 13, 13, 0.9) !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--neon-green) !important;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,255,136,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-can-container {
+    position: relative;
+    display: inline-block;
+}
+
+.hero-can {
+    animation: float 3s ease-in-out infinite;
+}
+
+.can-svg {
+    width: 200px;
+    height: 330px;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.5));
+}
+
+.can-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Feature Cards */
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-green);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+}
+
+.feature-icon {
+    font-size: 3rem;
+}
+
+/* Preset Cards */
+.preset-card {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.preset-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.preset-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.preset-body {
+    padding: 20px;
+}
+
+.preset-stats {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.preset-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--card-border);
+}
+
+/* Pricing Card */
+.pricing-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.pricing-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.pricing-list li:last-child {
+    border-bottom: none;
+}
+
+/* Background Variants */
+.bg-darker {
+    background: var(--darker-bg);
+}
+
+.bg-dark {
+    background: var(--dark-bg) !important;
+}
+
+.bg-black {
+    background: #000 !important;
+}
+
+/* ================================================
+   Konfigurator Styles
+   ================================================ */
+
+.konfigurator-container {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.step.active {
+    opacity: 1;
+    border-color: var(--neon-green);
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.step.completed {
+    opacity: 1;
+    border-color: var(--neon-blue);
+    background: rgba(0, 204, 255, 0.1);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.step.active .step-number {
+    background: var(--neon-green);
+    color: #000;
+}
+
+.step.completed .step-number {
+    background: var(--neon-blue);
+    color: #000;
+}
+
+.step-title {
+    font-size: 0.9rem;
+}
+
+/* Konfigurator Content */
+.konfigurator-main {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .konfigurator-main {
+        grid-template-columns: 1fr;
+    }
+    
+    .can-preview-container {
+        order: -1;
+    }
+}
+
+.konfigurator-options {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.step-content {
+    display: none;
+}
+
+.step-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Option Cards */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--card-border);
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.option-card:hover {
+    border-color: var(--neon-green);
+    transform: translateY(-3px);
+}
+
+.option-card.selected {
+    border-color: var(--neon-green);
+    background: rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+.option-card.premium {
+    border-color: #ffd700;
+}
+
+.option-card.premium.selected {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.option-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.option-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.option-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.option-price {
+    font-size: 0.9rem;
+    color: var(--neon-green);
+}
+
+.premium-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, #ffd700, #ffaa00);
+    color: #000;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Flavor Grid - Mehr Optionen */
+.flavor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.flavor-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+}
+
+.flavor-card:hover {
+    transform: translateY(-3px);
+}
+
+.flavor-card.selected {
+    border-width: 3px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.flavor-color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.flavor-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.flavor-category {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+}
+
+/* Filter Buttons */
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--neon-green);
+    color: #000;
+    border-color: var(--neon-green);
+}
+
+/* Search Box */
+.search-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 25px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--neon-green);
+}
+
+.search-box i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+/* Can Preview */
+.can-preview-container {
+    position: sticky;
+    top: 100px;
+}
+
+.can-preview-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.can-preview {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.can-preview-svg {
+    width: 150px;
+    height: 250px;
+    transition: all 0.3s ease;
+}
+
+/* Price Display */
+.price-display {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.price-row:last-child {
+    border-bottom: none;
+}
+
+.price-row.total {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--neon-green);
+    padding-top: 15px;
+    margin-top: 10px;
+    border-top: 2px solid var(--neon-green);
+}
+
+/* Coupon Input */
+.coupon-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.coupon-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.coupon-input-group input {
+    flex: 1;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+}
+
+.coupon-input-group button {
+    padding: 10px 20px;
+    background: var(--neon-blue);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.coupon-input-group button:hover {
+    background: var(--neon-green);
+}
+
+.coupon-success {
+    color: var(--neon-green);
+    margin-top: 10px;
+    display: none;
+}
+
+.coupon-error {
+    color: #ff4444;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Personalization */
+.personalization-section {
+    margin-top: 20px;
+}
+
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.color-picker-container input[type="color"] {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.color-presets {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.color-preset {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.color-preset:hover,
+.color-preset.selected {
+    border-color: #fff;
+    transform: scale(1.1);
+}
+
+.name-input {
+    margin-top: 20px;
+}
+
+.name-input input {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.name-input input:focus {
+    outline: none;
+    border-color: var(--neon-green);
+}
+
+/* Navigation Buttons */
+.konfigurator-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--card-border);
+}
+
+/* ================================================
+   Summary Page
+   ================================================ */
+
+.summary-container {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.summary-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.summary-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.summary-section:last-child {
+    border-bottom: none;
+}
+
+.summary-section h4 {
+    color: var(--neon-green);
+    margin-bottom: 15px;
+}
+
+.summary-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.summary-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.summary-total {
+    background: linear-gradient(45deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.2));
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+}
+
+.summary-price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--neon-green);
+}
+
+.summary-can-preview {
+    text-align: center;
+    padding: 30px;
+}
+
+/* ================================================
+   Auth Pages (Login/Register)
+   ================================================ */
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+}
+
+.auth-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    backdrop-filter: blur(10px);
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+.form-floating input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+}
+
+.form-floating input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 0 0.25rem rgba(0, 255, 136, 0.1);
+    color: var(--text-primary);
+}
+
+.form-floating label {
+    color: var(--text-secondary);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-links a {
+    color: var(--neon-green);
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Alert Styling */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-danger {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff6b6b;
+}
+
+.alert-success {
+    background: rgba(0, 255, 136, 0.2);
+    color: var(--neon-green);
+}
+
+/* ================================================
+   Meine Drinks Page
+   ================================================ */
+
+.drinks-container {
+    padding-top: 100px;
+    min-height: 100vh;
+}
+
+.drink-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.drink-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.drink-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.drink-mini-can {
+    width: 40px;
+    height: 70px;
+    border-radius: 5px;
+}
+
+.drink-body {
+    padding: 0 20px 20px;
+}
+
+.drink-footer {
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ================================================
+   Responsive Adjustments
+   ================================================ */
+
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    
+    .hero-section .col-lg-6:last-child {
+        margin-top: 40px;
+    }
+    
+    .progress-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .step {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    .konfigurator-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .konfigurator-nav .btn {
+        width: 100%;
+    }
+    
+    .flavor-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
+
+/* ================================================
+   Animations
+   ================================================ */
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.pop {
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--card-border);
+    border-top-color: var(--neon-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
